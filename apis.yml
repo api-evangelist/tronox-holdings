@@ -28,6 +28,8 @@ apis:
     description: >-
       The Tronox Holdings API provides access to platform services and data for enterprise integration and automation.
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/tronox
   - type: Website
     url: https://www.tronox.com
 maintainers:
