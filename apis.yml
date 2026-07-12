@@ -28,10 +28,14 @@ apis:
     description: >-
       The Tronox Holdings API provides access to platform services and data for enterprise integration and automation.
 common:
+  - type: DomainSecurity
+    url: security/tronox-holdings-domain-security.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/tronox
   - type: Website
     url: https://www.tronox.com
+  - url: https://www.tronox.com/feed/
+    type: Blog
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
