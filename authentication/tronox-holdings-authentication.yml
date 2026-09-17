@@ -1,0 +1,58 @@
+generated: '2026-09-17'
+method: probed
+source: >-
+  https://www.tronox.com/.well-known/oauth-authorization-server/,
+  https://www.tronox.com/.well-known/oauth-protected-resource/,
+  https://www.tronox.com/supplier/coupa-supplier-portal/,
+  https://www.tronox.com/ethics-and-governance/data-privacy/
+summary: >-
+  Tronox publishes no public REST API and therefore no OpenAPI securitySchemes. One
+  authentication surface is observable on a Tronox host: OAuth 2.0 (authorization code with
+  PKCE) in front of the MCP endpoint served by the WordPress MCP Adapter on www.tronox.com.
+  Supplier transactions (registration, sourcing events, purchase orders, ASNs, invoices) run on
+  the Coupa Supplier Portal, a third-party platform authenticated by Coupa's own accounts, not
+  by any Tronox-issued credential. Tronox does not issue a public API key.
+
+schemes:
+- id: mcp_oauth2
+  type: oauth2
+  surface: https://www.tronox.com/wp-json/mcp/mcp-oauth-server
+  flows:
+    authorizationCode:
+      authorizationUrl: https://www.tronox.com/oauth/authorize
+      tokenUrl: https://www.tronox.com/oauth/token
+      refreshUrl: https://www.tronox.com/oauth/token
+      revocationUrl: https://www.tronox.com/oauth/revoke
+      scopes:
+        mcp: Access the MCP server surface published by www.tronox.com
+  pkce_required_methods: [S256]
+  token_endpoint_auth_methods_supported: [none]
+  client_registration: >-
+    No RFC 7591 dynamic client registration endpoint is advertised. The authorization server
+    sets client_id_metadata_document_supported = true, so a client identifies itself with a
+    URL to a client-id metadata document rather than a pre-registered client_id.
+  bearer_methods_supported: [header]
+  anonymous_response: 401 mcp_unauthorized ("MCP authentication required.")
+  www_authenticate: 'Bearer realm="https://www.tronox.com", resource_metadata="https://www.tronox.com/.well-known/oauth-protected-resource"'
+  discovery_chain: >-
+    The 401 carries a WWW-Authenticate header whose resource_metadata parameter points at the
+    RFC 9728 document, which names https://www.tronox.com as the authorization server, whose
+    RFC 8414 document names the authorize/token/revoke endpoints - the full MCP authorization
+    discovery chain works anonymously.
+  evidence: https://www.tronox.com/.well-known/oauth-authorization-server/
+  evidence_status: 200
+
+- id: coupa_supplier_portal
+  type: delegated
+  surface: Coupa Supplier Portal (third-party, supplier.coupahost.com)
+  detail: >-
+    Suppliers register and sign in with a Coupa Supplier Portal account and link it to Tronox;
+    the FAQ on tronox.com covers registration, password reset and account merging inside
+    Coupa. No Tronox credential, API key or integration token is described.
+  evidence: https://www.tronox.com/supplier/coupa-supplier-portal/
+  evidence_status: 200
+
+not_published:
+- api_keys: Tronox does not issue or document API keys.
+- openid_connect: /.well-known/openid-configuration returns 404 on www.tronox.com.
+- sso_for_customers: no customer portal or customer login is published on tronox.com.

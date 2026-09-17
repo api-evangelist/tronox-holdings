@@ -1,0 +1,96 @@
+generated: '2026-09-17'
+method: probed
+source: https://www.tronox.com/.well-known/oauth-protected-resource/
+name: Tronox MCP Server (WordPress MCP Adapter)
+status: published
+summary: >-
+  www.tronox.com serves a live, OAuth-protected remote MCP surface. It was found by probe, not
+  by documentation: the corporate site publishes an RFC 8414 authorization-server metadata
+  document declaring a single scope "mcp", and an RFC 9728 protected-resource document naming
+  https://www.tronox.com/wp-json/mcp/mcp-oauth-server as the protected MCP resource. The
+  WordPress REST index at /wp-json/ confirms an "mcp" namespace with three routes and a
+  "wp-abilities/v1" namespace (the WordPress Abilities API the adapter exposes as tools).
+
+deployment:
+  mode: remote
+  endpoint: https://www.tronox.com/wp-json/mcp/mcp-oauth-server
+  auth: oauth
+  verified: probed
+
+scope_and_caveat: >-
+  READ THIS BEFORE TREATING THIS AS A PRODUCT API. This MCP server is the WordPress MCP Adapter
+  (a platform-authored plugin) running on Tronox's corporate WordPress marketing site. It is a
+  real MCP endpoint the company serves from its own domain, but Tronox is a titanium dioxide
+  pigment and mineral-sands producer with no developer program, and nothing on tronox.com
+  presents this endpoint as an interface to any Tronox product, order, supply-chain or customer
+  system. The tool list could not be read anonymously. Do not describe it as a Tronox business
+  API; it is the site's content surface, gated to WordPress users.
+
+endpoints_probed:
+- url: https://www.tronox.com/wp-json/mcp/mcp-oauth-server
+  method: POST
+  body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+  status: 401
+  response: '{"code":"mcp_unauthorized","message":"MCP authentication required.","data":{"status":401}}'
+  www_authenticate: 'Bearer realm="https://www.tronox.com", resource_metadata="https://www.tronox.com/.well-known/oauth-protected-resource"'
+- url: https://www.tronox.com/wp-json/mcp/mcp-adapter-default-server
+  method: POST
+  body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+  status: 401
+  response: '{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}'
+- url: https://www.tronox.com/wp-json/mcp
+  method: POST
+  status: 404
+  response: '{"code":"rest_no_route","message":"No route was found matching the URL and request method.","data":{"status":404}}'
+- url: https://www.tronox.com/wp-json/mcp
+  method: GET
+  status: 200
+  response: WordPress REST namespace index listing /mcp, /mcp/mcp-oauth-server and /mcp/mcp-adapter-default-server
+- url: https://www.tronox.com/wp-json/wp-abilities/v1/abilities
+  method: GET
+  status: 401
+  response: '{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}'
+
+authorization:
+  metadata_document: https://www.tronox.com/.well-known/oauth-authorization-server/
+  protected_resource_document: https://www.tronox.com/.well-known/oauth-protected-resource/
+  issuer: https://www.tronox.com
+  authorization_endpoint: https://www.tronox.com/oauth/authorize
+  token_endpoint: https://www.tronox.com/oauth/token
+  revocation_endpoint: https://www.tronox.com/oauth/revoke
+  response_types_supported: [code]
+  grant_types_supported: [authorization_code, refresh_token]
+  code_challenge_methods_supported: [S256]
+  token_endpoint_auth_methods_supported: [none]
+  client_id_metadata_document_supported: true
+  authorization_response_iss_parameter_supported: true
+  scopes_supported: [mcp]
+  bearer_methods_supported: [header]
+
+tools: []
+tools_note: >-
+  NOT RECORDED. tools/list returns 401 mcp_unauthorized without an OAuth bearer token, so the
+  live tool set and its inputSchema require authenticated introspection. The Abilities index
+  at /wp-json/wp-abilities/v1/abilities, which is what the adapter exposes as tools, also
+  returns 401. No tool list is published in documentation or in an llms.txt (www.tronox.com/llms.txt
+  returns 404), so there is nothing to fall back to. No tools were invented.
+
+wordpress_rest_namespaces_seen:
+- mcp
+- wp-abilities/v1
+- wp/v2
+- oembed/1.0
+- yoast/v1
+- relevanssi/v1
+- gravity-pdf/v1
+- wordfence/v1
+- ithemes-security/v1
+
+wordpress_mcp_routes_seen:
+- /wp-json/mcp
+- /wp-json/mcp/mcp-oauth-server
+- /wp-json/mcp/mcp-adapter-default-server
+- /wp-json/wp-abilities/v1/abilities
+- /wp-json/wp-abilities/v1/abilities/{name}
+- /wp-json/wp-abilities/v1/abilities/{name}/run
+- /wp-json/wp-abilities/v1/categories

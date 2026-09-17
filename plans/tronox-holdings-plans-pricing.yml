@@ -4,11 +4,15 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Tronox Holdings
 providerId: tronox-holdings
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-05'
-reconciled: false
+# Originally written by the API Evangelist bulk sweep dated 2026-05-04 (roadmap#35).
+# Re-checked 2026-09-17 against the live site: the absence it recorded was confirmed by
+# search, so the method is upgraded from generated to searched.
+method: searched
+generated: '2026-09-17'
+modified: '2026-09-17'
+reconciled: true
+plan_count: 0
+api_plan_count: 0
 tags:
   - Titanium Dioxide
   - Chemical
@@ -19,6 +23,14 @@ description: Tronox Holdings is a vertically integrated titanium dioxide and zir
   data is available to reconcile.
 sources:
   - https://www.tronox.com/
+  - https://www.tronox.com/products/titanium-dioxide/terms-and-conditions-for-tio2/
+  - https://www.tronox.com/products/mineral-sands/terms-and-conditions-for-mineral-sands/
+  - https://www.tronox.com/supplier/coupa-supplier-portal/
+searched_note: >-
+  Searched 2026-09-17: the 69-page sitemap of www.tronox.com carries no pricing, plans or
+  developer page; the only commercial-terms documents are regional sale terms and conditions
+  for TiO2 and mineral sands, which state no prices. plan_count is 0 because Tronox publishes
+  no plans, not because none were looked for.
 notes: No public developer API or self-serve pricing. Tronox is a chemicals/mining producer; commercial
   terms are negotiated directly. Plan trimmed to a single Contact Sales placeholder pending any future
   partner/EDI program disclosure.

@@ -64,7 +64,7 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Tronox Holdings is a major US corporation and Fortune 1000 company. The Tronox Holdings API provides programmatic access to its platform services, data, and integrations for enterprise customers and partners.
+Tronox Holdings plc is a vertically integrated producer of titanium dioxide (TiO2) pigment, mineral sands (titanium feedstock and zircon) and titanium chemicals, a Fortune 1000 chemicals and mining company operating mines and plants on three continents. It runs no developer program and publishes no product API, SDK or machine-readable contract; supplier transactions run on the third-party Coupa Supplier Portal and customer supply is contracted directly. The one protocol surface on a Tronox host is an OAuth-gated MCP endpoint served by the WordPress MCP Adapter on the corporate site, recorded here as a probed platform surface rather than a Tronox business API.
 
 **URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/tronox-holdings/refs/heads/main/apis.yml)
 
@@ -72,12 +72,12 @@ Tronox Holdings is a major US corporation and Fortune 1000 company. The Tronox H
 
 ## Tags:
 
- - Titanium Dioxide, Chemical, Mining
+ - Titanium Dioxide, Chemical, Mining, Mineral Sands, Zircon, Pigments, Manufacturing
 
 ## Timestamps
 
 - **Created:** 2026-04-19
-- **Modified:** 2026-04-19
+- **Modified:** 2026-09-17
 
 ## Maintainers
 

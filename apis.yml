@@ -28,37 +28,142 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/tronox-holdings.png
 tags:
   - Titanium Dioxide
+  - Chemicals
+  - Mining
+  - Mineral Sands
+  - Zircon
+  - Pigments
+  - Manufacturing
+tags_raw:
+  - Titanium Dioxide
   - Chemical
   - Mining
+  - Mineral Sands
+  - Zircon
+  - Pigments
+  - Manufacturing
 description: >-
-  Tronox Holdings is a major US corporation and Fortune 1000 company. The Tronox Holdings API provides programmatic access to its platform services, data, and integrations for enterprise customers and partners.
+  Tronox Holdings plc is a vertically integrated producer of titanium dioxide (TiO2) pigment,
+  mineral sands (titanium feedstock and zircon) and titanium chemicals, a Fortune 1000 chemicals
+  and mining company operating mines and plants on three continents. It runs no developer program
+  and publishes no product API, SDK or machine-readable contract; supplier transactions run on the
+  third-party Coupa Supplier Portal and customer supply is contracted directly. The one protocol
+  surface on a Tronox host is an OAuth-gated MCP endpoint served by the WordPress MCP Adapter on
+  the corporate site, recorded here as a probed platform surface rather than a Tronox business API.
 created: '2026-04-19'
-modified: '2026-04-19'
+modified: '2026-09-17'
 specificationVersion: '0.23'
 apis:
-  - aid: tronox-holdings:tronox-holdings-api
-    name: Tronox Holdings API
+  - aid: tronox-holdings:tronox-mcp-server
+    name: Tronox MCP Server (WordPress MCP Adapter)
     tags:
-      - Titanium Dioxide
-      - Chemical
-      - Mining
+      - MCP
+      - Agents
+      - WordPress
+    tags_raw:
+      - MCP
+      - Agents
+      - WordPress
     image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    baseURL: https://api.tronox.com
-    humanURL: https://developer.tronox.com
-    properties:
-      - url: https://developer.tronox.com/docs
-        type: Documentation
+    baseURL: https://www.tronox.com/wp-json/mcp/mcp-oauth-server
+    humanURL: https://www.tronox.com/
     description: >-
-      The Tronox Holdings API provides access to platform services and data for enterprise integration and automation.
+      An authenticated Model Context Protocol (MCP) endpoint served from Tronox's own corporate
+      WordPress host, found by probe on 2026-09-17 rather than by documentation. Anonymous
+      discovery works end to end: the 401 carries a WWW-Authenticate resource_metadata pointer,
+      the site publishes RFC 9728 protected-resource metadata and RFC 8414 authorization-server
+      metadata advertising an authorization_code + PKCE (S256) flow with a single "mcp" scope,
+      and the WordPress REST index confirms the mcp and wp-abilities/v1 namespaces. tools/list
+      itself returns 401 mcp_unauthorized without a bearer token, so the live tool schemas could
+      not be introspected. This is the platform-authored content surface of the marketing site,
+      not a Tronox product, order or supply-chain API - Tronox publishes none. The hosts the
+      previous record carried, api.tronox.com and developer.tronox.com, do not exist (NXDOMAIN).
+    properties:
+      - type: MCPServer
+        url: mcp/tronox-holdings-mcp.yml
+      - type: Authentication
+        url: authentication/tronox-holdings-authentication.yml
+      - type: OAuthScopes
+        url: scopes/tronox-holdings-scopes.yml
+      - type: ErrorCatalog
+        url: errors/tronox-holdings-problem-types.yml
 common:
-  - type: DomainSecurity
-    url: security/tronox-holdings-domain-security.yml
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/tronox
   - type: Website
     url: https://www.tronox.com
-  - url: https://www.tronox.com/feed/
-    type: Blog
+  - type: Blog
+    url: https://www.tronox.com/news-media/
+  - type: BlogRSS
+    url: https://www.tronox.com/feed/
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/tronox
+  - type: YouTube
+    url: https://www.youtube.com/channel/UCiMqXZqm5vTUCmqDmP4Hqog
+  - type: InvestorRelations
+    url: https://investor.tronox.com/
+  - type: Careers
+    url: https://www.tronox.com/careers/
+  - type: Contact
+    url: https://www.tronox.com/contact-us/
+  - type: PrivacyPolicy
+    url: https://www.tronox.com/privacy-policy/
+  - type: TermsOfService
+    url: https://www.tronox.com/terms-of-use/
+  - type: DomainSecurity
+    url: security/tronox-holdings-domain-security.yml
+  - type: WellKnown
+    url: well-known/tronox-holdings-well-known.yml
+  - type: MCPServer
+    url: mcp/tronox-holdings-mcp.yml
+  - type: Authentication
+    url: authentication/tronox-holdings-authentication.yml
+  - type: OAuthScopes
+    url: scopes/tronox-holdings-scopes.yml
+  - type: Conformance
+    url: conformance/tronox-holdings-conformance.yml
+  - type: ErrorCatalog
+    url: errors/tronox-holdings-problem-types.yml
+  - type: LLMsTxt
+    url: llms/tronox-holdings-llms.txt
+  - type: Plans
+    url: plans/tronox-holdings-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/tronox-holdings-rate-limits.yml
+  - type: FinOps
+    url: finops/tronox-holdings-finops.yml
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-09-17'
+  status: enriched
+  artifacts_added: 9
+  pass: local-v3
+x-coverage:
+  state: covered
+  reason: covered
+  detail: >-
+    Fully profiled from the provider's own public surface, and the honest headline is that
+    Tronox - a titanium dioxide pigment and mineral-sands producer - ships no product API,
+    developer program, SDK or contract: the api.tronox.com and developer.tronox.com hosts the
+    previous record carried are NXDOMAIN, supplier exchange runs on the third-party Coupa
+    Supplier Portal, and the only live protocol surface on a Tronox host is the platform-authored
+    WordPress MCP Adapter endpoint at https://www.tronox.com/wp-json/mcp/mcp-oauth-server, whose
+    tools/list returns 401 behind a fully discoverable OAuth 2.0 + PKCE flow.
+  evidence:
+    - url: https://api.tronox.com/openapi.json
+      status: 0
+    - url: https://developer.tronox.com/docs
+      status: 0
+    - url: https://www.tronox.com/openapi.json
+      status: 404
+    - url: https://www.tronox.com/llms.txt
+      status: 404
+    - url: https://www.tronox.com/.well-known/oauth-protected-resource/
+      status: 200
+    - url: https://www.tronox.com/.well-known/oauth-authorization-server/
+      status: 200
+    - url: https://www.tronox.com/wp-json/mcp/mcp-oauth-server
+      status: 401
+    - url: https://www.tronox.com/supplier/coupa-supplier-portal/
+      status: 200
+  checked: '2026-09-17'

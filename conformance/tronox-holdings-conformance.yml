@@ -1,0 +1,63 @@
+generated: '2026-09-17'
+method: probed
+source: >-
+  https://www.tronox.com/.well-known/oauth-authorization-server/,
+  https://www.tronox.com/.well-known/oauth-protected-resource/,
+  https://www.tronox.com/wp-json/mcp/mcp-oauth-server
+summary: >-
+  Tronox publishes no API contract, so no contract-level standard (OpenAPI, JSON:API, OData,
+  RFC 9457, FHIR, SCIM) can be asserted. The only protocol standards observable on a Tronox
+  host are the OAuth 2.0 discovery documents and the MCP endpoint served by the WordPress
+  MCP Adapter on www.tronox.com. No domain standard for the chemicals or mining market
+  (e.g. CDX/eCl@ss product data, EDIFACT/X12 order messages) is declared anywhere public.
+conformance:
+- id: oauth2
+  conforms: true
+  evidence: https://www.tronox.com/.well-known/oauth-authorization-server/
+  note: authorization_code + refresh_token grants, response_types [code]
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: true
+  evidence: https://www.tronox.com/.well-known/oauth-authorization-server/
+- id: rfc9728-oauth-protected-resource-metadata
+  conforms: true
+  evidence: https://www.tronox.com/.well-known/oauth-protected-resource/
+- id: rfc7636-pkce
+  conforms: true
+  evidence: https://www.tronox.com/.well-known/oauth-authorization-server/
+  note: code_challenge_methods_supported [S256]
+- id: rfc9207-authorization-response-iss
+  conforms: true
+  evidence: https://www.tronox.com/.well-known/oauth-authorization-server/
+  note: authorization_response_iss_parameter_supported true
+- id: mcp
+  conforms: true
+  evidence: https://www.tronox.com/wp-json/mcp/mcp-oauth-server
+  note: >-
+    JSON-RPC MCP endpoint answering tools/list with a structured 401 mcp_unauthorized; the
+    protocol version and capabilities could not be read without a bearer token.
+- id: oidc
+  conforms: false
+  evidence: https://www.tronox.com/.well-known/openid-configuration
+  note: 404
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: https://www.tronox.com/.well-known/security.txt
+  note: 404
+- id: rfc9457
+  conforms: false
+  evidence: https://www.tronox.com/wp-json/mcp/mcp-oauth-server
+  note: errors use the WordPress REST envelope {code, message, data.status}, not application/problem+json
+- id: openapi
+  conforms: false
+  evidence: https://www.tronox.com/openapi.json
+  note: 404 on www.tronox.com; api.tronox.com and developer.tronox.com are NXDOMAIN
+- id: a2a-agent-card
+  conforms: false
+  evidence: https://www.tronox.com/.well-known/agent-card.json
+  note: 404 at both /.well-known/agent-card.json and /.well-known/agent.json
+domain_standards:
+  note: >-
+    No domain standard declared. Tronox's supplier exchange runs on the Coupa Supplier Portal
+    (Coupa's cXML/EDI surface, not Tronox's) and its customer commerce is contract-negotiated;
+    no Tronox-published contract carries a chemicals/mining data standard. Reward-only check;
+    nothing invented to fill it.

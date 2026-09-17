@@ -1,0 +1,73 @@
+generated: '2026-09-17'
+method: probed
+source: live HTTPS probes of the named /.well-known/ paths on every host this record knows
+note: >-
+  www.tronox.com is the only Tronox host that resolves. The two hosts the previous record
+  carried, developer.tronox.com and api.tronox.com, have no DNS record at all (NXDOMAIN),
+  so they were recorded as unreachable rather than as 404s, and the bare apex tronox.com
+  301-redirects every path to www.tronox.com. Two documents are served and both are real
+  JSON: an RFC 8414 OAuth authorization-server metadata document and an RFC 9728 OAuth
+  protected-resource metadata document, published by the WordPress MCP Adapter running on
+  the corporate site (WordPress trailing-slash canonicalisation 301s the slashless path to
+  the slashed one; the slashed URL answers 200 application/json). Every other path returns
+  the WordPress 404 theme page (text/html, ~87 KB), which is a miss, not a document. There
+  is no security.txt at either location.
+hosts:
+- host: www.tronox.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    final_url: https://www.tronox.com/.well-known/oauth-authorization-server/
+    file: tronox-holdings-oauth-authorization-server.json
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    content_type: application/json
+    final_url: https://www.tronox.com/.well-known/oauth-protected-resource/
+    file: tronox-holdings-oauth-protected-resource.json
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: tronox.com
+  note: apex 301-redirects every /.well-known/ path to the same path on www.tronox.com; not a distinct surface
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 301
+    redirect: https://www.tronox.com/.well-known/oauth-authorization-server/
+  - path: /.well-known/security.txt
+    status: 301
+    redirect: https://www.tronox.com/.well-known/security.txt
+  - path: /.well-known/openid-configuration
+    status: 301
+    redirect: https://www.tronox.com/.well-known/openid-configuration
+  - path: /.well-known/api-catalog
+    status: 301
+    redirect: https://www.tronox.com/.well-known/api-catalog
+  - path: /.well-known/ai-plugin.json
+    status: 301
+    redirect: https://www.tronox.com/.well-known/ai-plugin.json
+  - path: /.well-known/agent-card.json
+    status: 301
+    redirect: https://www.tronox.com/.well-known/agent-card.json
+  - path: /.well-known/agent.json
+    status: 301
+    redirect: https://www.tronox.com/.well-known/agent.json
+- host: developer.tronox.com
+  unreachable: true
+  detail: NXDOMAIN - no A/AAAA/CNAME record exists for this name; the host the previous record used as humanURL does not exist
+  documents: []
+- host: api.tronox.com
+  unreachable: true
+  detail: NXDOMAIN - no A/AAAA/CNAME record exists for this name; the host the previous record used as baseURL does not exist
+  documents: []

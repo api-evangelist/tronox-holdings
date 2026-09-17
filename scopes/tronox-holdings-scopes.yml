@@ -1,0 +1,21 @@
+generated: '2026-09-17'
+method: probed
+source: https://www.tronox.com/.well-known/oauth-authorization-server/
+docs: null
+docs_note: >-
+  No scope or permission reference page is published. The scope list below is the complete
+  scopes_supported array from the provider's own RFC 8414 authorization server metadata
+  document; nothing was added to it.
+authorization_server: https://www.tronox.com
+scope_count: 1
+scopes:
+- name: mcp
+  description: >-
+    The only scope advertised by the www.tronox.com authorization server. It gates the MCP
+    protected resource at https://www.tronox.com/wp-json/mcp/mcp-oauth-server, as declared by
+    the RFC 9728 protected-resource document. No finer-grained scopes are published and no
+    per-tool scoping is documented. The server is the WordPress MCP Adapter on the corporate
+    site, not a Tronox product API.
+  resource: https://www.tronox.com/wp-json/mcp/mcp-oauth-server
+  evidence: https://www.tronox.com/.well-known/oauth-protected-resource/
+  evidence_status: 200
