@@ -87,6 +87,9 @@ apis:
         url: scopes/tronox-holdings-scopes.yml
       - type: ErrorCatalog
         url: errors/tronox-holdings-problem-types.yml
+    x-surface: platform-generated
+    x-platform: wordpress
+    x-platform-surface: mcp-plugin
 common:
   - type: Website
     url: https://www.tronox.com
